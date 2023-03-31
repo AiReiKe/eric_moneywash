@@ -4,10 +4,10 @@ Config.Locale = 'tw'
 
 Config.oldESX = false   -- true is for ESX 1.1/1.2
 
-Config.Discord = {
-    enable = true,
-    webhook = '',
-    imgURL = '',
+Config.Discord = {  -- Discord 紀錄
+    enable = true,  -- 是否啟用
+    webhook = '',   -- WebHook
+    imgURL = '',    -- 伺服器頭像
 }
 
 Config.Zone = {
