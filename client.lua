@@ -68,15 +68,17 @@ local WashMoney = function(zone)
                     if math.random(1, 100) <= (Config.Zone[zone].dispatchRate or 0) then
                         TriggerEvent("eric_moneywash:dispatch", Config.Zone[zone].pos)
                     end
-                    if ProgressBar(8000 + math.ceil(tonumber(data.value)/1000*Config.PriceTime), _U("washing_money"), {dict = 'amb@prop_human_bum_bin@idle_a', clip = 'idle_a'}, nil) then
+                    ProgressBar(8000 + math.ceil(tonumber(data.value)/1000*Config.PriceTime), _U("washing_money"), {dict = 'amb@prop_human_bum_bin@idle_a', clip = 'idle_a'}, nil,
+                    function()
                         while not eventID do
                             Wait(1)
                         end
                         TriggerServerEvent("eric_moneywash:WashMoney", tonumber(data.value), zone, eventID)
-                    else
+                        washing = false
+                    end, function()
                         TriggerEvent("eric_moneywash:notify", _U('wash_fail'), "error")
-                    end
-                    washing = false
+                        washing = false
+                    end)
                 else
                     TriggerEvent("eric_moneywash:notify", _U('no_enough_black'), "error")
                     washing = false

@@ -37,17 +37,17 @@ Config.PriceTime = 40   --基底讀條為8秒, 每洗1000黑錢, 讀條增加多
 if not IsDuplicityVersion() then
     function TextUI(msg) -- 顯示自己常用的TextUI, 例: esx、ox、okok
         ESX.TextUI(msg)
-        --exports.ox_lib:showTextUI(msg)
+        --lib.showTextUI(msg)
         --exports['okokTextUI']:Open(msg, 'lightblue', 'right')
     end
     
     function HideUI()   --隱藏TextUI
         ESX.HideUI()
-        --exports['ox_lib']:hideTextUI()
+        --lib.hideTextUI()
         --exports['okokTextUI']:Close()
     end
     
-    function ProgressBar(duration, label, anim, scenario)   -- 自己常用的讀條, 例: esx、ox、mythic
+    function ProgressBar(duration, label, anim, scenario, onFinish, onCancel)   -- 自己常用的讀條, 例: esx、ox、mythic
         ESX.Progressbar(label, duration, {
             FreezePlayer = true,
             animation = {
@@ -56,9 +56,19 @@ if not IsDuplicityVersion() then
                 lib = anim.clip,
                 Scenario = scenario
             },
+            onFinish = function()
+                if onFinish then
+                    onFinish()
+                end
+            end,
+            onCancel = function()
+                if onCancel then
+                    onCancel()
+                end
+            end
         })
         return true
-        --[[return exports.ox_lib:progressBar({
+        --[[if lib.progressBar({    -- ox_lib
             duration = duration,
             label = label,
             useWhileDead = false,
@@ -74,8 +84,16 @@ if not IsDuplicityVersion() then
                 dict = anim and anim.dict,
                 clip = anim and anim.clip
             }
-        })]]
-        --[[TriggerEvent("mythic_progbar:client:progress", {
+        }) then
+            if onFinish then
+                onFinish()
+            end
+        else
+            if onCancel then
+                onCancel()
+            end
+        end]]
+        --[[TriggerEvent("mythic_progbar:client:progress", {    -- mythic_progbar
             name = "eric_moneywash",
             duration = duration,
             label = label,
@@ -94,15 +112,19 @@ if not IsDuplicityVersion() then
             }
         }, function(status)
             if not status then
-                return true
+                if onFinish then
+                    onFinish()
+                end
             else
-                return false
+                if onCancel then
+                    onCancel()
+                end
             end
         end)]]
     end
 
     function CancelProgress(onCancel)   -- 取消讀條
-        --exports['ox_lib']:cancelProgress()
+        --lib.cancelProgress()
         --TriggerEvent("mythic_progbar:client:cancel")
     end
 

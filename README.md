@@ -1,7 +1,7 @@
 # eric_moneywash
 Is a money wash script for ESX
 
-version 1.0.0
+version 1.0.1
 
 1. 附帶 Discord 紀錄
 2. 多項自定義內容(Notify、TextUI等等)
@@ -15,3 +15,7 @@ version 1.0.0
 3. 新增警察洗錢限制
 
 ⚠ 此插件為免費提供 嚴禁轉賣或從事任何商業行為 ⚠
+
+
+1.0.1 更新:
+優化讀條
